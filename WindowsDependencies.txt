@@ -1,0 +1,7 @@
+Windows Dependencies Per Dependency Walker:
+    - Kernel32.dll (system file)
+    - MSVCRT.dll (system file)
+    - MinGWM10.dll (I must provide)
+    - LibGCC_S_DW2-1.dll (I must provide)
+    - QTCoreD4.dll (I must provide)
+    - QTGUID4.dll (I must provide)
