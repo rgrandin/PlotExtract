@@ -13,8 +13,9 @@
 
 #include "clickablepixmap.h"
 
-#include <DLList.h>
 #include <Array2D.h>
+#include <DLList.h>
+#include <StringManip.h>
 
 namespace Ui {
     class PlotExtract;
@@ -195,6 +196,24 @@ private slots:
     void OnMenuInstructionsClicked() const;
 
 
+    /**
+     * @brief Zoom-in on the image 25%.
+     */
+    void OnBtnZoomInClicked();
+
+
+    /**
+     * @brief Zoom-out on the image 25%.
+     */
+    void OnBtnZoomOutClicked();
+
+
+    /**
+     * @brief Zoom the image to best-fit the image viewing window.
+     */
+    void OnBtnZoomFitClicked();
+
+
 
 private:
 
@@ -272,6 +291,9 @@ private:
 
     /** @brief List of markers for data points */
     DLList<QGraphicsEllipseItem*,1> markerlist;
+
+    /** @brief Zoom level. */
+    float zoomlevel;
 
 
 

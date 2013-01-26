@@ -56,24 +56,7 @@ void ClickablePixmap::mousePressEvent(QMouseEvent *event)
 
 void ClickablePixmap::ScaleImage(QSize size)
 {
-    /*
-      Only scale pixmap if it is larger than the given size.
-      If the pixmap does need to be scaled, the limiting dimension
-      is found so that the image isn't distorted.
-     */
-
-    if(pixmap->width() > size.width() || pixmap->height() > size.height()){
-        qreal diffwidth = size.width() - pixmap->width();
-        qreal diffheight = size.height() - pixmap->height();
-        diffwidth = sqrt(diffwidth*diffwidth);
-        diffheight = sqrt(diffheight*diffheight);
-
-        if(diffwidth > diffheight){
-            *pixmap = pixmap->scaledToWidth(size.width());
-        } else {
-            *pixmap = pixmap->scaledToHeight(size.height());
-        }
-    }
+    *pixmap = pixmap->scaled(size,Qt::KeepAspectRatio, Qt::SmoothTransformation);
 }
 
 

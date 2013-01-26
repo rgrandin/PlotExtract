@@ -29,3 +29,6 @@ FORMS    += plotextract.ui
 OTHER_FILES += \
     WindowsDependencies.txt
 
+RESOURCES += \
+    app_figs.qrc
+

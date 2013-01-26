@@ -6,524 +6,580 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1000</width>
-    <height>700</height>
+    <width>800</width>
+    <height>760</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
   <property name="minimumSize">
    <size>
-    <width>1000</width>
-    <height>700</height>
+    <width>800</width>
+    <height>760</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>1000</width>
-    <height>700</height>
+    <width>16777215</width>
+    <height>16777215</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>PlotExtract</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QGraphicsView" name="img_view">
-    <property name="geometry">
-     <rect>
-      <x>305</x>
-      <y>20</y>
-      <width>650</width>
-      <height>600</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>650</width>
-      <height>600</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>650</width>
-      <height>600</height>
-     </size>
-    </property>
-    <property name="cursor" stdset="0">
-     <cursorShape>ArrowCursor</cursorShape>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Sunken</enum>
-    </property>
-    <property name="verticalScrollBarPolicy">
-     <enum>Qt::ScrollBarAsNeeded</enum>
-    </property>
-    <property name="horizontalScrollBarPolicy">
-     <enum>Qt::ScrollBarAsNeeded</enum>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btn_quit">
-    <property name="geometry">
-     <rect>
-      <x>200</x>
-      <y>600</y>
-      <width>81</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Quit</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btn_select_image">
-    <property name="geometry">
-     <rect>
-      <x>70</x>
-      <y>30</y>
-      <width>151</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Select Image</string>
-    </property>
-   </widget>
-   <widget class="QGroupBox" name="grp_horizontal_axis">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>90</y>
-      <width>191</width>
-      <height>111</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>Horizontal Axis</string>
-    </property>
-    <widget class="QPushButton" name="btn_horizontal_start">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>30</y>
-       <width>81</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="cursor">
-      <cursorShape>IBeamCursor</cursorShape>
-     </property>
-     <property name="text">
-      <string>Select Start</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="btn_horizontal_end">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>60</y>
-       <width>81</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Select End</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="txt_horizontal_start">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>30</y>
-       <width>81</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>0</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="txt_horizontal_end">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>60</y>
-       <width>81</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>0</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QGroupBox" name="grp_vertical_axis">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>210</y>
-      <width>191</width>
-      <height>111</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>Vertical Axis</string>
-    </property>
-    <widget class="QPushButton" name="btn_vertical_start">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>30</y>
-       <width>81</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Select Start</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="btn_vertical_end">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>60</y>
-       <width>81</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Select End</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="txt_vertical_start">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>30</y>
-       <width>81</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>0</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="txt_vertical_end">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>60</y>
-       <width>81</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>0</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QPushButton" name="btn_save">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>600</y>
-      <width>81</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Save</string>
-    </property>
-   </widget>
-   <widget class="QGroupBox" name="grp_points">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>340</y>
-      <width>191</width>
-      <height>111</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>Data Points</string>
-    </property>
-    <widget class="QLabel" name="lbl_npoints">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>25</y>
-       <width>151</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Count: 0</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="btn_undo">
-     <property name="geometry">
-      <rect>
-       <x>55</x>
-       <y>45</y>
-       <width>81</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Undo Last</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="btn_clearall">
-     <property name="geometry">
-      <rect>
-       <x>55</x>
-       <y>75</y>
-       <width>81</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Clear All</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QGroupBox" name="grp_sort">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>470</y>
-      <width>271</width>
-      <height>121</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>Output Sorting</string>
-    </property>
-    <widget class="QGroupBox" name="grp_sort_axis">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>30</y>
-       <width>121</width>
-       <height>80</height>
-      </rect>
-     </property>
-     <property name="title">
-      <string>Axis</string>
-     </property>
-     <widget class="QRadioButton" name="rdo_sort_horizontal_axis">
-      <property name="enabled">
-       <bool>true</bool>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <layout class="QGridLayout" name="gridLayout_2">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetMaximumSize</enum>
       </property>
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>30</y>
-        <width>83</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Horizontal</string>
-      </property>
-      <property name="checked">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QRadioButton" name="rdo_sort_vertical_axis">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>50</y>
-        <width>83</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Vertical</string>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QGroupBox" name="grp_sort_dir">
-     <property name="geometry">
-      <rect>
-       <x>140</x>
-       <y>30</y>
-       <width>121</width>
-       <height>80</height>
-      </rect>
-     </property>
-     <property name="title">
-      <string>Direction</string>
-     </property>
-     <widget class="QRadioButton" name="rdo_sort_ascending">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>30</y>
-        <width>83</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Ascending</string>
-      </property>
-      <property name="checked">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QRadioButton" name="rdo_sort_descending">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>50</y>
-        <width>91</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Descending</string>
-      </property>
-     </widget>
-    </widget>
-   </widget>
-   <widget class="QPushButton" name="btn_horizontal_color_dlg">
-    <property name="geometry">
-     <rect>
-      <x>210</x>
-      <y>100</y>
-      <width>90</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Select Color</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btn_vertical_color_dlg">
-    <property name="geometry">
-     <rect>
-      <x>210</x>
-      <y>220</y>
-      <width>90</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Select Color</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>220</x>
-      <y>130</y>
-      <width>71</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Marker Size</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>220</x>
-      <y>250</y>
-      <width>71</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Marker Size</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="txt_vertical_marker_size">
-    <property name="geometry">
-     <rect>
-      <x>225</x>
-      <y>265</y>
-      <width>51</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>5</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="txt_horizontal_marker_size">
-    <property name="geometry">
-     <rect>
-      <x>225</x>
-      <y>145</y>
-      <width>51</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>5</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="txt_marker_size">
-    <property name="geometry">
-     <rect>
-      <x>225</x>
-      <y>395</y>
-      <width>51</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>5</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_3">
-    <property name="geometry">
-     <rect>
-      <x>220</x>
-      <y>380</y>
-      <width>66</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Marker Size</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btn_marker_color_dlg">
-    <property name="geometry">
-     <rect>
-      <x>210</x>
-      <y>350</y>
-      <width>90</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Select Color</string>
-    </property>
-   </widget>
+      <item row="0" column="5">
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="5" column="0">
+         <widget class="QGraphicsView" name="img_view"/>
+        </item>
+        <item row="0" column="0">
+         <widget class="QGroupBox" name="groupBox_7">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>65</height>
+           </size>
+          </property>
+          <property name="title">
+           <string>Image Controls</string>
+          </property>
+          <widget class="QPushButton" name="btn_zoom_out">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>30</y>
+             <width>31</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="app_figs.qrc">
+             <normaloff>:/icons/app_figs/zoom-out.png</normaloff>:/icons/app_figs/zoom-out.png</iconset>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="btn_zoom_fit">
+           <property name="geometry">
+            <rect>
+             <x>50</x>
+             <y>30</y>
+             <width>31</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="app_figs.qrc">
+             <normaloff>:/icons/app_figs/sync-icon.png</normaloff>:/icons/app_figs/sync-icon.png</iconset>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="btn_zoom_in">
+           <property name="geometry">
+            <rect>
+             <x>90</x>
+             <y>30</y>
+             <width>31</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="app_figs.qrc">
+             <normaloff>:/icons/app_figs/zoom-in.png</normaloff>:/icons/app_figs/zoom-in.png</iconset>
+           </property>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="1">
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="1" column="0">
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>10</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="2" column="0">
+         <widget class="QGroupBox" name="groupBox">
+          <property name="minimumSize">
+           <size>
+            <width>235</width>
+            <height>160</height>
+           </size>
+          </property>
+          <property name="title">
+           <string>Horizontal Axis</string>
+          </property>
+          <widget class="QPushButton" name="btn_horizontal_start">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>40</y>
+             <width>90</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Select Start</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="btn_horizontal_end">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>70</y>
+             <width>91</width>
+             <height>22</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Select End</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="btn_horizontal_color_dlg">
+           <property name="geometry">
+            <rect>
+             <x>80</x>
+             <y>130</y>
+             <width>90</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Select Color</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="txt_horizontal_start">
+           <property name="geometry">
+            <rect>
+             <x>120</x>
+             <y>40</y>
+             <width>101</width>
+             <height>21</height>
+            </rect>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label">
+           <property name="geometry">
+            <rect>
+             <x>40</x>
+             <y>100</y>
+             <width>81</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Marker Size</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_3">
+           <property name="geometry">
+            <rect>
+             <x>120</x>
+             <y>20</y>
+             <width>91</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Value&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="txt_horizontal_end">
+           <property name="geometry">
+            <rect>
+             <x>120</x>
+             <y>70</y>
+             <width>101</width>
+             <height>21</height>
+            </rect>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="txt_horizontal_marker_size">
+           <property name="geometry">
+            <rect>
+             <x>120</x>
+             <y>100</y>
+             <width>41</width>
+             <height>21</height>
+            </rect>
+           </property>
+          </widget>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QGroupBox" name="groupBox_3">
+          <property name="minimumSize">
+           <size>
+            <width>235</width>
+            <height>160</height>
+           </size>
+          </property>
+          <property name="title">
+           <string>Vertical Axis</string>
+          </property>
+          <widget class="QLabel" name="label_4">
+           <property name="geometry">
+            <rect>
+             <x>120</x>
+             <y>20</y>
+             <width>91</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Value&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_5">
+           <property name="geometry">
+            <rect>
+             <x>40</x>
+             <y>100</y>
+             <width>81</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Marker Size</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="btn_vertical_end">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>70</y>
+             <width>90</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Select End</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="btn_vertical_color_dlg">
+           <property name="geometry">
+            <rect>
+             <x>80</x>
+             <y>130</y>
+             <width>90</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Select Color</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="btn_vertical_start">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>40</y>
+             <width>90</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Select Start</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="txt_vertical_end">
+           <property name="geometry">
+            <rect>
+             <x>120</x>
+             <y>70</y>
+             <width>101</width>
+             <height>21</height>
+            </rect>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="txt_vertical_start">
+           <property name="geometry">
+            <rect>
+             <x>120</x>
+             <y>40</y>
+             <width>101</width>
+             <height>21</height>
+            </rect>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="txt_vertical_marker_size">
+           <property name="geometry">
+            <rect>
+             <x>120</x>
+             <y>100</y>
+             <width>41</width>
+             <height>21</height>
+            </rect>
+           </property>
+          </widget>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QGroupBox" name="groupBox_2">
+          <property name="minimumSize">
+           <size>
+            <width>250</width>
+            <height>150</height>
+           </size>
+          </property>
+          <property name="title">
+           <string>Output Sorting</string>
+          </property>
+          <widget class="QGroupBox" name="groupBox_5">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>30</y>
+             <width>101</width>
+             <height>80</height>
+            </rect>
+           </property>
+           <property name="title">
+            <string>Axis</string>
+           </property>
+           <widget class="QRadioButton" name="rdo_sort_horizontal_axis">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>20</y>
+              <width>93</width>
+              <height>21</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Horizontal</string>
+            </property>
+           </widget>
+           <widget class="QRadioButton" name="rdo_sort_vertical_axis">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>50</y>
+              <width>93</width>
+              <height>21</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Vertical</string>
+            </property>
+           </widget>
+          </widget>
+          <widget class="QGroupBox" name="groupBox_6">
+           <property name="geometry">
+            <rect>
+             <x>120</x>
+             <y>30</y>
+             <width>120</width>
+             <height>80</height>
+            </rect>
+           </property>
+           <property name="title">
+            <string>Direction</string>
+           </property>
+           <widget class="QRadioButton" name="rdo_sort_ascending">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>20</y>
+              <width>93</width>
+              <height>21</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Ascending</string>
+            </property>
+           </widget>
+           <widget class="QRadioButton" name="rdo_sort_descending">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>50</y>
+              <width>93</width>
+              <height>21</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Descending</string>
+            </property>
+           </widget>
+          </widget>
+          <widget class="QPushButton" name="btn_save">
+           <property name="geometry">
+            <rect>
+             <x>80</x>
+             <y>120</y>
+             <width>90</width>
+             <height>22</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Save</string>
+           </property>
+          </widget>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QGroupBox" name="groupBox_4">
+          <property name="minimumSize">
+           <size>
+            <width>230</width>
+            <height>160</height>
+           </size>
+          </property>
+          <property name="title">
+           <string>Data Points</string>
+          </property>
+          <widget class="QLabel" name="lbl_npoints">
+           <property name="geometry">
+            <rect>
+             <x>60</x>
+             <y>30</y>
+             <width>131</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Number of Points: 0</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="btn_undo">
+           <property name="geometry">
+            <rect>
+             <x>30</x>
+             <y>60</y>
+             <width>90</width>
+             <height>22</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Undo Last</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="btn_clearall">
+           <property name="geometry">
+            <rect>
+             <x>130</x>
+             <y>60</y>
+             <width>90</width>
+             <height>22</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Undo All</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="btn_marker_color_dlg">
+           <property name="geometry">
+            <rect>
+             <x>80</x>
+             <y>120</y>
+             <width>90</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Select Color</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_7">
+           <property name="geometry">
+            <rect>
+             <x>40</x>
+             <y>90</y>
+             <width>81</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Marker Size</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="txt_marker_size">
+           <property name="geometry">
+            <rect>
+             <x>120</x>
+             <y>90</y>
+             <width>41</width>
+             <height>21</height>
+            </rect>
+           </property>
+          </widget>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QPushButton" name="btn_select_image">
+          <property name="text">
+           <string>Select Plot Image</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="0">
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1000</width>
-     <height>20</height>
+     <width>800</width>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -584,6 +640,8 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="app_figs.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -1,6 +1,12 @@
 #include "plotextract.h"
 #include "ui_plotextract.h"
 
+/* Link addresses:
+ *
+ *  http://www.visualpharm.com/
+ *
+ */
+
 
 PlotExtract::PlotExtract(QWidget *parent) :
     QMainWindow(parent), ui(new Ui::PlotExtract)
@@ -14,6 +20,13 @@ PlotExtract::PlotExtract(QWidget *parent) :
     brush = new QBrush;
     scenerefpt = new QPoint;
 
+
+    ui->txt_horizontal_marker_size->setText("7");
+    ui->txt_vertical_marker_size->setText("7");
+    ui->txt_marker_size->setText("7");
+
+    ui->rdo_sort_ascending->setChecked(true);
+    ui->rdo_sort_horizontal_axis->setChecked(true);
 
 
     /*
@@ -31,14 +44,12 @@ PlotExtract::PlotExtract(QWidget *parent) :
     // Help -> Instructions menu item
     connect( ui->mnu_instructions, SIGNAL(triggered()), this, SLOT(OnMenuInstructionsClicked()));
 
-    // Quit button
-    connect( ui->btn_quit, SIGNAL(clicked()), this, SLOT(close()));
-
     // Connect 'Select Image' button to callback to identify the input file
     connect( ui->btn_select_image, SIGNAL(clicked()), this, SLOT(GetInputFile()));
 
     // Connect to 'MouseClicked' signal of my ClickablePixmap class
     connect( myimg, SIGNAL(MouseClicked(qint64,qint64)), this, SLOT(OnClickInImage(qint64,qint64)));
+
 
     // Connect endpoint-select buttons to slots
     connect( ui->btn_horizontal_start, SIGNAL(clicked()), this, SLOT(OnHorizontalStartClicked()));
@@ -65,6 +76,11 @@ PlotExtract::PlotExtract(QWidget *parent) :
     connect( ui->txt_vertical_marker_size, SIGNAL(editingFinished()), this, SLOT(OnVerticalAxisDefinitionMarkersChanged()));
     connect( ui->txt_marker_size, SIGNAL(editingFinished()), this, SLOT(OnDataMarkersChanged()));
 
+
+    // Image control
+    connect(ui->btn_zoom_in, SIGNAL(clicked()), this, SLOT(OnBtnZoomInClicked()));
+    connect(ui->btn_zoom_out, SIGNAL(clicked()), this, SLOT(OnBtnZoomOutClicked()));
+    connect(ui->btn_zoom_fit, SIGNAL(clicked()), this, SLOT(OnBtnZoomFitClicked()));
 
     /*
       Set default values for member variables
@@ -115,6 +131,10 @@ PlotExtract::PlotExtract(QWidget *parent) :
     ui->btn_marker_color_dlg->setDisabled(true);
     ui->txt_marker_size->setDisabled(true);
 
+    ui->btn_zoom_fit->setDisabled(true);
+    ui->btn_zoom_in->setDisabled(true);
+    ui->btn_zoom_out->setDisabled(true);
+
 
 }
 
@@ -132,7 +152,7 @@ void PlotExtract::GetInputFile()
     QString dlgtitle("Open Image File");
     QString dir("./");
     QString filter("Images (*.png *.xpm *.jpg)");
-    inputfile = dlg.getOpenFileName(this, dlgtitle,dir,filter,NULL,QFileDialog::DontUseNativeDialog);
+    inputfile = QFileDialog::getOpenFileName(this,dlgtitle,dir,filter);
 
     if(inputfile != ""){
         myimg->RemoveFromScene(scene);
@@ -168,6 +188,12 @@ void PlotExtract::GetInputFile()
 
         ui->btn_marker_color_dlg->setDisabled(false);
         ui->txt_marker_size->setDisabled(false);
+
+        ui->btn_zoom_fit->setDisabled(false);
+        ui->btn_zoom_in->setDisabled(false);
+        ui->btn_zoom_out->setDisabled(false);
+
+        zoomlevel = 1.0e0;
     }
 }
 
@@ -176,14 +202,16 @@ void PlotExtract::OnClickInImage(qint64 x, qint64 y)
 {
     // Map (x,y) global coordinates to scene and define ellipse rectangles
     QPointF scenept = ui->img_view->mapToScene(ui->img_view->mapFromGlobal(QPoint(x,y)));
-    QRectF datarect(scenept.x()-3.0-markersize/2.0,
-                    scenept.y()-3.0-markersize/2.0,
+    //qreal offset = markersize/2.0;
+    qreal offset = 3.5/zoomlevel;
+    QRectF datarect(scenept.x()-offset-markersize/2.0,
+                    scenept.y()-offset-markersize/2.0,
                     markersize,markersize);
-    QRectF axishrect(scenept.x()-3.0-axes_markersize_horizontal/2.0,
-                     scenept.y()-3.0-axes_markersize_horizontal/2.0,
+    QRectF axishrect(scenept.x()-offset-axes_markersize_horizontal/2.0,
+                     scenept.y()-offset-axes_markersize_horizontal/2.0,
                      axes_markersize_horizontal,axes_markersize_horizontal);
-    QRectF axisvrect(scenept.x()-3.0-axes_markersize_vertical/2.0,
-                     scenept.y()-3.0-axes_markersize_vertical/2.0,
+    QRectF axisvrect(scenept.x()-offset-axes_markersize_vertical/2.0,
+                     scenept.y()-offset-axes_markersize_vertical/2.0,
                      axes_markersize_vertical,axes_markersize_vertical);
 
     /*
@@ -584,7 +612,14 @@ void PlotExtract::OnSaveClicked()
     QString dlgtitle("Save CSV File");
     QString dir("./");
     QString filter("Comma-Separated Values (*.csv)");
-    QString savefilename = dlg.getSaveFileName(this, dlgtitle,dir,filter,NULL,QFileDialog::DontUseNativeDialog);
+    QString savefilename = dlg.getSaveFileName(this, dlgtitle,dir,filter);
+
+    /* Ensure that 'csv' file extension is used.  If not, append one. */
+    std::string ext;
+    ext = StringManip::DetermFileExt(savefilename.toStdString());
+    if(ext != "csv" || ext != "CSV"){
+        savefilename += ".csv";
+    }
 
     QFile file(savefilename);
     file.open(QIODevice::WriteOnly | QIODevice::Text);
@@ -815,19 +850,23 @@ void PlotExtract::OnMenuInstructionsClicked() const
 }
 
 
-/*
-  Unused code...for later reference/use.
- */
+void PlotExtract::OnBtnZoomInClicked()
+{
+    ui->img_view->scale(1.25,1.25);
+    zoomlevel *= 1.25;
+}
 
-/*
-QMessageBox msgBox;
-QString message;
-message = "Point Coordinates: (";
-message.append(QString("%1").arg(x));
-message.append(",");
-message.append(QString("%1").arg(y));
-message.append(")");
-msgBox.setText(message);
-msgBox.setWindowTitle("Message");
-msgBox.exec();
-*/
+
+void PlotExtract::OnBtnZoomOutClicked()
+{
+    ui->img_view->scale(0.75,0.75);
+    zoomlevel *= 0.75;
+}
+
+
+void PlotExtract::OnBtnZoomFitClicked()
+{
+    ui->img_view->scale(1.0/zoomlevel,1.0/zoomlevel);
+    zoomlevel = 1.0;
+}
+
