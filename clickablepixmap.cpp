@@ -1,3 +1,11 @@
+/**
+ * @file clickablepixmap.cpp
+ * @author Robert Grandin
+ * @date 17 November 2011
+ * @brief Implementation of ClickablePixmap class.
+ */
+
+
 #include "clickablepixmap.h"
 
 ClickablePixmap::ClickablePixmap(QWidget *parent) :

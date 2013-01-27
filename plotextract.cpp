@@ -1,3 +1,11 @@
+/**
+ * @file plotextract.cpp
+ * @author Robert Grandin
+ * @date 17 November 2011
+ * @brief Implementation of PlotExtract class.
+ */
+
+
 #include "plotextract.h"
 #include "ui_plotextract.h"
 

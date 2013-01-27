@@ -1,3 +1,12 @@
+/**
+ * @file main.cpp
+ * @author Robert Grandin
+ * @date 17 November 2011
+ * @brief Main function for PlotExtract application.
+ */
+
+
+
 #include <iostream>
 #include <cstdlib>
 #include <stdlib.h>
