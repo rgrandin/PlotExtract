@@ -617,7 +617,7 @@ void PlotExtract::OnSaveClicked()
     /* Ensure that 'csv' file extension is used.  If not, append one. */
     std::string ext;
     ext = StringManip::DetermFileExt(savefilename.toStdString());
-    if(ext != "csv" || ext != "CSV"){
+    if(ext != "csv" && ext != "CSV"){
         savefilename += ".csv";
     }
 
