@@ -59,19 +59,31 @@
 
 #include <QDialog>
 
+/** @brief Namespace used for user interface. */
 namespace Ui {
+
+/** @brief Dialog box to display application credits. */
 class Credits;
 }
 
+
+/** @brief Dialog box to display application credits. */
 class Credits : public QDialog
 {
     Q_OBJECT
     
 public:
+    /**
+     * @brief Credits constructor.
+     * @param parent Parent widget.
+     */
     explicit Credits(QWidget *parent = 0);
-    ~Credits();
+
+    /** @brief Destructor. */
+    virtual ~Credits();
     
 private:
+    /** @brief Pointer to interface. */
     Ui::Credits *ui;
 };
 

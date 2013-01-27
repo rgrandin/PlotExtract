@@ -77,7 +77,12 @@
 #include <DLList.h>
 #include <StringManip.h>
 
+
+
+/** @brief Namespace for user interface. */
 namespace Ui {
+
+    /** @brief Main window for PlotExtract application. */
     class PlotExtract;
 }
 
