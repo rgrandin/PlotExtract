@@ -1,8 +1,6 @@
 PlotExtract
 ===========
 
-![Alt text](/app_figs/point-graph-icon.png)
-
 PlotExtract is a tool for digitizing plots.
 
 
@@ -18,3 +16,5 @@ PlotExtract.pro must be updated to contain the new location.
 
 ## Building PlotExtract
 
+PlotExtract is based on the Qt framework, and importing the project into the Qt Creator
+IDE is recommended for building.  The IDE will handle the Qt-specific compilation steps.
