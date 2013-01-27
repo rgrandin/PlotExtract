@@ -1,11 +1,6 @@
 #include "plotextract.h"
 #include "ui_plotextract.h"
 
-/* Link addresses:
- *
- *  http://www.visualpharm.com/
- *
- */
 
 
 PlotExtract::PlotExtract(QWidget *parent) :
@@ -43,6 +38,9 @@ PlotExtract::PlotExtract(QWidget *parent) :
 
     // Help -> Instructions menu item
     connect( ui->mnu_instructions, SIGNAL(triggered()), this, SLOT(OnMenuInstructionsClicked()));
+
+    // Help -> Credits menu item
+    connect(ui->actionCredits, SIGNAL(triggered()), this, SLOT(OnMenuActionHelpCreditsActivated()));
 
     // Connect 'Select Image' button to callback to identify the input file
     connect( ui->btn_select_image, SIGNAL(clicked()), this, SLOT(GetInputFile()));
@@ -933,3 +931,9 @@ void PlotExtract::OnBtnZoomFitClicked()
     zoomlevel = 1.0;
 }
 
+
+void PlotExtract::OnMenuActionHelpCreditsActivated()
+{
+    Credits dlg;
+    dlg.exec();
+}

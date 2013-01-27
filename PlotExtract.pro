@@ -19,12 +19,15 @@ INCLUDEPATH += /home/rgrandin/qt-workspace/cppclasses
 
 SOURCES += main.cpp\
         plotextract.cpp \
-    clickablepixmap.cpp
+    clickablepixmap.cpp \
+    credits.cpp
 
 HEADERS  += plotextract.h \
-    clickablepixmap.h
+    clickablepixmap.h \
+    credits.h
 
-FORMS    += plotextract.ui
+FORMS    += plotextract.ui \
+    credits.ui
 
 OTHER_FILES += \
     WindowsDependencies.txt

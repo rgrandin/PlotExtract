@@ -3,5 +3,6 @@
         <file>app_figs/sync-icon.png</file>
         <file>app_figs/zoom-in.png</file>
         <file>app_figs/zoom-out.png</file>
+        <file>app_figs/information-icon.png</file>
     </qresource>
 </RCC>

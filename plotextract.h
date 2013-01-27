@@ -12,6 +12,7 @@
 #include <QColorDialog>
 
 #include "clickablepixmap.h"
+#include "credits.h"
 
 #include <Array2D.h>
 #include <DLList.h>
@@ -212,6 +213,12 @@ private slots:
      * @brief Zoom the image to best-fit the image viewing window.
      */
     void OnBtnZoomFitClicked();
+
+
+    /**
+     * @brief Display dialog box containing credits.
+     */
+    void OnMenuActionHelpCreditsActivated();
 
 
 

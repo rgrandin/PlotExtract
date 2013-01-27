@@ -600,6 +600,7 @@
      <string>Help</string>
     </property>
     <addaction name="mnu_instructions"/>
+    <addaction name="actionCredits"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuHelp"/>
@@ -640,6 +641,15 @@
   <action name="mnu_instructions">
    <property name="text">
     <string>Instructions</string>
+   </property>
+  </action>
+  <action name="actionCredits">
+   <property name="icon">
+    <iconset resource="app_figs.qrc">
+     <normaloff>:/icons/app_figs/information-icon.png</normaloff>:/icons/app_figs/information-icon.png</iconset>
+   </property>
+   <property name="text">
+    <string>Credits</string>
    </property>
   </action>
  </widget>
