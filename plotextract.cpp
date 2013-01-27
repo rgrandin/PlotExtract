@@ -140,6 +140,8 @@ PlotExtract::PlotExtract(QWidget *parent) :
     ui->btn_zoom_fit->setDisabled(true);
     ui->btn_zoom_in->setDisabled(true);
     ui->btn_zoom_out->setDisabled(true);
+
+    zoomlevel = 1.0;
 }
 
 
@@ -194,8 +196,6 @@ void PlotExtract::GetInputFile()
         myimg = new ClickablePixmap;
         connect( myimg, SIGNAL(MouseClicked(qint64,qint64)), this, SLOT(OnClickInImage(qint64,qint64)));
 
-        //myimg->RemoveFromScene(scene);
-
         /* Clear all nodes. */
         npoints = 0;
         OnClearAllClicked();
@@ -206,6 +206,8 @@ void PlotExtract::GetInputFile()
         ui->img_view->setScene(scene);
         ui->img_view->show();
         ui->img_view->centerOn(0,0);
+
+        OnBtnZoomFitClicked();
 
         // Create axis-definition ellipses of zero size.  These are 'dummy' ellipses so that
         // the 'removeItem' function calls later do not error-out.
