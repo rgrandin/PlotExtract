@@ -1,5 +1,4 @@
 #include <iostream>
-using namespace std;
 #include <cstdlib>
 #include <stdlib.h>
 #include <stdio.h>
@@ -13,11 +12,12 @@ using namespace std;
 #include <time.h>
 
 #include <QtGui/QApplication>
+#include <QSafeApplication.h>
 #include "plotextract.h"
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    SafeApplication a(argc, argv);
     PlotExtract w;
     w.show();
 

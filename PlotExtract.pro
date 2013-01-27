@@ -15,23 +15,23 @@ CONFIG(debug, debug|release) {
     DESTDIR = release
 }
 
-INCLUDEPATH += /home/rgrandin/qt-workspace/cppclasses
+INCLUDEPATH += ../cpp-classes/src
 
-SOURCES += main.cpp\
-        plotextract.cpp \
-    clickablepixmap.cpp \
-    credits.cpp
+SOURCES +=  main.cpp\
+            plotextract.cpp \
+            clickablepixmap.cpp \
+            credits.cpp
 
 HEADERS  += plotextract.h \
-    clickablepixmap.h \
-    credits.h
+            clickablepixmap.h \
+            credits.h
 
 FORMS    += plotextract.ui \
-    credits.ui
+            credits.ui
 
 OTHER_FILES += \
-    WindowsDependencies.txt
+            WindowsDependencies.txt
 
 RESOURCES += \
-    app_figs.qrc
+            app_figs.qrc
 

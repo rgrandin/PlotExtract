@@ -140,8 +140,6 @@ PlotExtract::PlotExtract(QWidget *parent) :
     ui->btn_zoom_fit->setDisabled(true);
     ui->btn_zoom_in->setDisabled(true);
     ui->btn_zoom_out->setDisabled(true);
-
-
 }
 
 
@@ -194,8 +192,13 @@ void PlotExtract::GetInputFile()
 
         scene = new QGraphicsScene;
         myimg = new ClickablePixmap;
+        connect( myimg, SIGNAL(MouseClicked(qint64,qint64)), this, SLOT(OnClickInImage(qint64,qint64)));
 
-        myimg->RemoveFromScene(scene);
+        //myimg->RemoveFromScene(scene);
+
+        /* Clear all nodes. */
+        npoints = 0;
+        OnClearAllClicked();
 
         myimg->OpenImage(inputfile);
         myimg->AddToScene(scene);
@@ -242,7 +245,7 @@ void PlotExtract::OnClickInImage(qint64 x, qint64 y)
 {
     // Map (x,y) global coordinates to scene and define ellipse rectangles
     QPointF scenept = ui->img_view->mapToScene(ui->img_view->mapFromGlobal(QPoint(x,y)));
-    //qreal offset = markersize/2.0;
+
     qreal offset = 3.5/zoomlevel;
     QRectF datarect(scenept.x()-offset-markersize/2.0,
                     scenept.y()-offset-markersize/2.0,
