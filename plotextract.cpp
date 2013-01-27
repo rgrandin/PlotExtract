@@ -94,6 +94,14 @@ PlotExtract::PlotExtract(QWidget *parent) :
     axis_color_horizontal = Qt::red;
     axis_color_vertical = Qt::green;
 
+    QString stylesheet;
+    stylesheet = "QPushButton#btn_marker_color_dlg { color: " + markercolor.name() + "}";
+    ui->btn_marker_color_dlg->setStyleSheet(stylesheet);
+    stylesheet = "QPushButton#btn_horizontal_color_dlg { color: " + axis_color_horizontal.name() + "}";
+    ui->btn_horizontal_color_dlg->setStyleSheet(stylesheet);
+    stylesheet = "QPushButton#btn_vertical_color_dlg { color: " + axis_color_vertical.name() + "}";
+    ui->btn_vertical_color_dlg->setStyleSheet(stylesheet);
+
     select_horizontal_start = false;
     select_horizontal_end = false;
     select_vertical_start = false;
@@ -142,6 +150,22 @@ PlotExtract::PlotExtract(QWidget *parent) :
 PlotExtract::~PlotExtract()
 {
     delete ui;
+
+    if(scene){
+        delete scene;
+    }
+    if(myimg){
+        delete myimg;
+    }
+    if(pen){
+        delete pen;
+    }
+    if(brush){
+        delete brush;
+    }
+    if(scenerefpt){
+        delete scenerefpt;
+    }
 }
 
 
@@ -155,6 +179,33 @@ void PlotExtract::GetInputFile()
     inputfile = QFileDialog::getOpenFileName(this,dlgtitle,dir,filter);
 
     if(inputfile != ""){
+
+//        if(scene){
+//            delete scene;
+//        }
+//        if(myimg){
+//            delete myimg;
+//        }
+//        if(pen){
+//            delete pen;
+//        }
+//        if(brush){
+//            delete brush;
+//        }
+//        if(scenerefpt){
+//            delete scenerefpt;
+//        }
+
+
+//        scene = new QGraphicsScene;
+//        myimg = new ClickablePixmap;
+//        pen = new QPen;
+//        brush = new QBrush;
+//        scenerefpt = new QPoint;
+
+//        disconnect(this, myimg);
+//        connect( myimg, SIGNAL(MouseClicked(qint64,qint64)), this, SLOT(OnClickInImage(qint64,qint64)));
+
         myimg->RemoveFromScene(scene);
 
         myimg->OpenImage(inputfile);
@@ -769,6 +820,10 @@ void PlotExtract::OnHorizontalAxisColorClicked()
         axis_color_horizontal = Qt::red;
     }
 
+    QString stylesheet;
+    stylesheet = "QPushButton#btn_horizontal_color_dlg { color: " + axis_color_horizontal.name() + "}";
+    ui->btn_horizontal_color_dlg->setStyleSheet(stylesheet);
+
     OnHorizontalAxisDefinitionMarkersChanged();
 }
 
@@ -783,6 +838,10 @@ void PlotExtract::OnVerticalAxisColorClicked()
         axis_color_vertical = Qt::green;
     }
 
+    QString stylesheet;
+    stylesheet = "QPushButton#btn_vertical_color_dlg { color: " + axis_color_vertical.name() + "}";
+    ui->btn_vertical_color_dlg->setStyleSheet(stylesheet);
+
     OnVerticalAxisDefinitionMarkersChanged();
 }
 
@@ -796,6 +855,10 @@ void PlotExtract::OnDataColorClicked()
     if(markercolor.isValid() == false){
         markercolor = Qt::blue;
     }
+
+    QString stylesheet;
+    stylesheet = "QPushButton#btn_marker_color_dlg { color: " + markercolor.name() + "}";
+    ui->btn_marker_color_dlg->setStyleSheet(stylesheet);
 
     OnDataMarkersChanged();
 }

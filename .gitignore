@@ -1,2 +1,3 @@
 # Ignore local build settings
 *.user*
+*.pro.user
