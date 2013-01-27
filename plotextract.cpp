@@ -61,6 +61,9 @@ PlotExtract::PlotExtract(QWidget *parent) :
     // Save button
     connect( ui->btn_save, SIGNAL(clicked()), this, SLOT(OnSaveClicked()));
 
+    // Quit button
+    connect(ui->btn_quit, SIGNAL(clicked()), this, SLOT(close()));
+
     // Marker color-selection
     connect( ui->btn_horizontal_color_dlg, SIGNAL(clicked()), this, SLOT(OnHorizontalAxisColorClicked()));
     connect( ui->btn_vertical_color_dlg, SIGNAL(clicked()), this, SLOT(OnVerticalAxisColorClicked()));
@@ -140,6 +143,8 @@ PlotExtract::PlotExtract(QWidget *parent) :
     ui->btn_zoom_fit->setDisabled(true);
     ui->btn_zoom_in->setDisabled(true);
     ui->btn_zoom_out->setDisabled(true);
+    ui->lbl_zoom_level->setDisabled(true);
+    ui->lbl_zoom_level->setText("Zoom Level: --");
 
     zoomlevel = 1.0;
 }
@@ -237,6 +242,7 @@ void PlotExtract::GetInputFile()
         ui->btn_zoom_fit->setDisabled(false);
         ui->btn_zoom_in->setDisabled(false);
         ui->btn_zoom_out->setDisabled(false);
+        ui->lbl_zoom_level->setDisabled(false);
 
         zoomlevel = 1.0e0;
     }
@@ -865,7 +871,7 @@ void PlotExtract::OnMenuInstructionsClicked() const
 
     message  = "INSTRUCTIONS: \n";
     message += "\n";
-    message += "1.) Click 'Select Image' to open image of plot. \n";
+    message += "1.) Click 'Open Plot' to open image of plot. \n";
     message += "    \n";
     message += "2.) Identify each axis by first clicking the appropriate \n";
     message += "    start/end button and then clicking the corresponding \n";
@@ -911,6 +917,12 @@ void PlotExtract::OnBtnZoomInClicked()
 {
     ui->img_view->scale(1.25,1.25);
     zoomlevel *= 1.25;
+
+    npoints -= 1;
+
+    QString zoomstring;
+    zoomstring = "Zoom Level: " + QString::number(zoomlevel) + "x";
+    ui->lbl_zoom_level->setText(zoomstring);
 }
 
 
@@ -918,6 +930,10 @@ void PlotExtract::OnBtnZoomOutClicked()
 {
     ui->img_view->scale(0.75,0.75);
     zoomlevel *= 0.75;
+
+    QString zoomstring;
+    zoomstring = "Zoom Level: " + QString::number(zoomlevel) + "x";
+    ui->lbl_zoom_level->setText(zoomstring);
 }
 
 
@@ -925,6 +941,10 @@ void PlotExtract::OnBtnZoomFitClicked()
 {
     ui->img_view->scale(1.0/zoomlevel,1.0/zoomlevel);
     zoomlevel = 1.0;
+
+    QString zoomstring;
+    zoomstring = "Zoom Level: " + QString::number(zoomlevel) + "x";
+    ui->lbl_zoom_level->setText(zoomstring);
 }
 
 

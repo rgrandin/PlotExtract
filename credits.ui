@@ -32,11 +32,11 @@
      <x>20</x>
      <y>50</y>
      <width>361</width>
-     <height>71</height>
+     <height>141</height>
     </rect>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Credits:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Zoom In/Out/Fit &amp;amp; Credits Icons: &lt;a href=&quot;http://www.visualpharm.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;http://www.visualpharm.com/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Credits:&lt;/span&gt;&lt;br/&gt;Zoom In/Out/Fit &amp;amp; Credits Icons: &lt;br/&gt;&lt;a href=&quot;http://www.visualpharm.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;http://www.visualpharm.com/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Graph Icon:&lt;br/&gt;&lt;a href=&quot;http://www.endlessicons.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;http://www.endlessicons.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
  </widget>
