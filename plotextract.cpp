@@ -149,12 +149,6 @@ PlotExtract::~PlotExtract()
 {
     delete ui;
 
-    if(scene){
-        delete scene;
-    }
-    if(myimg){
-        delete myimg;
-    }
     if(pen){
         delete pen;
     }
@@ -164,13 +158,22 @@ PlotExtract::~PlotExtract()
     if(scenerefpt){
         delete scenerefpt;
     }
+    if(myimg->AddedToScene()){
+        delete scene;
+        scene = NULL;
+        myimg = NULL;
+    } else {
+        delete scene;
+        delete myimg;
+        scene = NULL;
+        myimg = NULL;
+    }
 }
 
 
 void PlotExtract::GetInputFile()
 {
     // Get input filename and add image to scene
-    QFileDialog dlg;
     QString dlgtitle("Open Image File");
     QString dir("./");
     QString filter("Images (*.png *.xpm *.jpg)");
@@ -178,31 +181,19 @@ void PlotExtract::GetInputFile()
 
     if(inputfile != ""){
 
-//        if(scene){
-//            delete scene;
-//        }
-//        if(myimg){
-//            delete myimg;
-//        }
-//        if(pen){
-//            delete pen;
-//        }
-//        if(brush){
-//            delete brush;
-//        }
-//        if(scenerefpt){
-//            delete scenerefpt;
-//        }
+        if(myimg->AddedToScene()){
+            delete scene;
+            scene = NULL;
+            myimg = NULL;
+        } else {
+            delete scene;
+            delete myimg;
+            scene = NULL;
+            myimg = NULL;
+        }
 
-
-//        scene = new QGraphicsScene;
-//        myimg = new ClickablePixmap;
-//        pen = new QPen;
-//        brush = new QBrush;
-//        scenerefpt = new QPoint;
-
-//        disconnect(this, myimg);
-//        connect( myimg, SIGNAL(MouseClicked(qint64,qint64)), this, SLOT(OnClickInImage(qint64,qint64)));
+        scene = new QGraphicsScene;
+        myimg = new ClickablePixmap;
 
         myimg->RemoveFromScene(scene);
 

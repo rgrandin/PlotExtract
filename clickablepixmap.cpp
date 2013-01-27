@@ -6,8 +6,17 @@ ClickablePixmap::ClickablePixmap(QWidget *parent) :
     pixmap = NULL;
 
     setCursor(Qt::CrossCursor);
+
+    added_to_scene = false;
 }
 
+
+ClickablePixmap::~ClickablePixmap()
+{
+    if(pixmap){
+        delete pixmap;
+    }
+}
 
 
 void ClickablePixmap::OpenImage(QString filename)
@@ -36,6 +45,8 @@ void ClickablePixmap::AddToScene(QGraphicsScene *scene)
     this->setGeometry(pixrect);
     scene->addWidget(this);
     scene->addPixmap(*pixmap);
+
+    added_to_scene = true;
 }
 
 
@@ -60,17 +71,24 @@ void ClickablePixmap::ScaleImage(QSize size)
 }
 
 
-void ClickablePixmap::RemoveFromScene(QGraphicsScene *scene) const
+void ClickablePixmap::RemoveFromScene(QGraphicsScene *scene)
 {
     QList<QGraphicsItem*> itemlist;
     itemlist = scene->items();
     for(int i=0; i<itemlist.size(); i++){
         scene->removeItem(itemlist.value(i));
     }
+
+    added_to_scene = false;
 }
 
 
 QSize ClickablePixmap::GetSize() const
 {
     return pixmap->size();
+}
+
+bool ClickablePixmap::AddedToScene() const
+{
+    return added_to_scene;
 }

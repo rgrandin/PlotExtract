@@ -19,6 +19,12 @@ public:
       */
     explicit ClickablePixmap(QWidget *parent = 0);
 
+
+    /**
+     * @brief Destructor.
+     */
+    virtual ~ClickablePixmap();
+
     /**
       @brief Open image as pixmap.
       @pre ClickablePixmap object exists.
@@ -58,7 +64,7 @@ public:
       @post No change to this object.
       @return None.
       */
-    void RemoveFromScene(QGraphicsScene *scene) const;
+    void RemoveFromScene(QGraphicsScene *scene);
 
 
     /**
@@ -69,6 +75,13 @@ public:
       @return Size of pixmap.
       */
     QSize GetSize() const;
+
+
+    /**
+     * @brief AddedToScene checks if this pixmap has been added to a scene.
+     * @return True if pixmap has been added to a scene.  False if not.
+     */
+    bool AddedToScene() const;
 
 
 protected:
@@ -82,6 +95,9 @@ protected:
 private:
     /** @brief Pixmap which will contain the image */
     QPixmap *pixmap;
+
+    /** @brief Tracks if pixmap was added to a scene. */
+    bool added_to_scene;
 
 
 signals:
