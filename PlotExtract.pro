@@ -35,3 +35,8 @@ OTHER_FILES += \
 RESOURCES += \
             app_figs.qrc
 
+
+win32{
+    DEFINES += _CRT_SECURE_NO_WARNINGS
+}
+
