@@ -170,6 +170,17 @@ set(PLOTEXTRACT_SOURCES ${PLOTEXTRACT_DIR}clickablepixmap.cpp
 #
 # ==============================================================================
 
+# Configure RPATH for library-loading on Linux
+SET(CMAKE_SKIP_BUILD_RPATH  FALSE)
+SET(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE) 
+SET(CMAKE_BUILD_RPATH ${CMAKE_BUILD_RPATH} ${GEN_CLASSES_LIB_DIR})
+
+# Add "../lib" directory relative to executable to library search path.  This
+# makes the executable portable.
+SET (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-rpath,'$ORIGIN/../lib/'" )
+
+
+
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 ADD_EXECUTABLE(${PLOTEXTRACT_NAME} ${PLOTEXTRACT_SOURCES}
                                    ${PLOTEXTRACT_HEADERS_MOC}
@@ -180,8 +191,10 @@ TARGET_LINK_LIBRARIES(${PLOTEXTRACT_NAME}
                             ${QT_LIBRARIES}
                             ${GEN_CLASSES_LIBS}
                      )
+                     
 
-
+                     
+                     
 
 
 
@@ -191,12 +204,22 @@ TARGET_LINK_LIBRARIES(${PLOTEXTRACT_NAME}
 #
 # ==============================================================================
 
-INSTALL(TARGETS ${PLOTEXTRACT_NAME}
+
+INSTALL(TARGETS ${PLOTEXTRACT_NAME} 
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib
 )
 
+# On Linux, copy General-Use C++ library to 'lib' directory
+if(UNIX)
+  INSTALL(FILES ${GEN_CLASSES_LIB_DIR}/${GEN_CLASSES_LIBS} DESTINATION lib)
+endif()
+
+# On Windows, copy General-Use C++ library to 'bin' directory
+if(WIN32)
+  INSTALL(FILES ${GEN_CLASSES_LIB_DIR}/${GEN_CLASSES_LIBS} DESTINATION bin)
+endif()
 
 
 
@@ -209,6 +232,7 @@ INSTALL(TARGETS ${PLOTEXTRACT_NAME}
 INCLUDE(InstallRequiredSystemLibraries)
 
 SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Plot digitization program.")
+SET(CPACK_PACKAGE_NAME "PlotExtract")
 SET(CPACK_PACKAGE_VENDOR "Robert Grandin")
 SET(CPACK_PACKAGE_VERSION_MAJOR "1")
 SET(CPACK_PACKAGE_VERSION_MINOR "0")
