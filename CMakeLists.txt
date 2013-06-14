@@ -18,8 +18,10 @@ set(CMAKE_BUILD_TYPE "RelWithDebInfo" CACHE STRING
 
 
 # Control build options and feature support
-SET(PLOTEXTRACT_CXX_11 ON CACHE BOOL "Enable C++-11 Support")
-SET(PLOTEXTRACT_OPENMP ON CACHE BOOL "Enable OpenMP Support")
+SET(USE_CXX_11 ON CACHE BOOL "Enable C++-11 Support Globally")
+SET(USE_OPENMP ON CACHE BOOL "Enable OpenMP Support Globally")
+SET(USE_QT ON CACHE BOOL "Enable Qt Functionality Globally" FORCE)
+SET(USE_VTK OFF CACHE BOOL "Enable VTK Library Use Globally")
 
 
 
@@ -37,13 +39,20 @@ SET(PLOTEXTRACT_OPENMP ON CACHE BOOL "Enable OpenMP Support")
 
 # GCC
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-    if(PLOTEXTRACT_CXX_11)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")    # Enable C++11 features
+    
+    if(CMAKE_COMPILER_IS_GNUCXX AND USE_CXX_11)
+        SET(ENABLE_CXX11 "-std=c++11")
+        SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${ENABLE_CXX11}")
         add_definitions(-DCXX11)
     endif()
 
+
     if(PLOTEXTRACT_OPENMP)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp")      # Enable OpenMP
+        #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp")      # Enable OpenMP
+        SET_TARGET_PROPERTIES(${PLOTEXTRACT_NAME}  PROPERTIES 
+                COMPILE_FLAGS "-fopenmp"
+                LINK_FLAGS "-fopenmp"
+                )
     endif()
 endif()
 
@@ -58,29 +67,6 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /openmp")      # Enable OpenMP
     endif()
 endif()
-
-
-
-# ==============================================================================
-#
-#   Add general-use C++ classes
-#
-# ==============================================================================
-
-# The following must be manually set.  An improved solution would be to configure
-# the general-use classes to be found automatically using 'FIND_PACKAGE', but this
-# manual configuration must be used for now.
-set(GEN_CLASSES_INCLUDE "GEN_CLASSES_NOTFOUND" CACHE STRING
-        "Path to include files for General-Use C++ classes.")
-set(GEN_CLASSES_LIB_DIR "GEN_CLASSES_LIB_DIR_NOTFOUND" CACHE STRING
-        "Path to library for General-Use C++ classes.")
-set(GEN_CLASSES_LIBS "GEN_CLASSES_LIBS_NOTFOUND" CACHE STRING
-        "Library for General-Use C++ classes.")
-
-# Add include and linking info to build
-link_directories(${GEN_CLASSES_LIB_DIR})
-include_directories(${GEN_CLASSES_INCLUDE})
-
 
 
 
@@ -119,24 +105,39 @@ SET(PLOTEXTRACT_HEADERS
         clickablepixmap.h
         credits.h
         plotextract.h
-   )
-QT4_WRAP_CPP(PLOTEXTRACT_HEADERS_MOC ${PLOTEXTRACT_HEADERS})
+)
+SET(QT_HEADERS ${QT_HEADERS} ${PLOTEXTRACT_HEADERS})
+QT4_WRAP_CPP(PLOTEXTRACT_HEADERS_MOC ${QT_HEADERS})
 
 
 # UI files
 SET(PLOTEXTRACT_UI
         credits.ui
         plotextract.ui
-   )
+)
 QT4_WRAP_UI(PLOTEXTRACT_HEADER_FORMS ${PLOTEXTRACT_UI})
 
 
 # Resources
 SET(PLOTEXTRACT_QRC
         app_figs.qrc
-   )
+)
 QT4_ADD_RESOURCES(PLOTEXTRACT_RESOURCES ${PLOTEXTRACT_QRC})
 
+
+
+
+
+# ==============================================================================
+#
+#   Add general-use C++ classes
+#
+# ==============================================================================
+
+set(GEN_CLASSES_DIR "gen-classes" CACHE STRING 
+    "Name of subdirectory containing CMakeLists.txt for General-Use C++ classes.")
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/${GEN_CLASSES_DIR})
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/${GEN_CLASSES_DIR})
 
 
 
@@ -150,14 +151,15 @@ QT4_ADD_RESOURCES(PLOTEXTRACT_RESOURCES ${PLOTEXTRACT_QRC})
 #
 # ==============================================================================
 
-# Define source files to be compiled into object files.  Most of the *.cpp files are not
-# listed here because they are templated and thus directly included in their headers.
+# Sources local to this directory
 set(PLOTEXTRACT_SOURCES ${PLOTEXTRACT_DIR}clickablepixmap.cpp
                         ${PLOTEXTRACT_DIR}credits.cpp
                         ${PLOTEXTRACT_DIR}main.cpp
                         ${PLOTEXTRACT_DIR}plotextract.cpp
     )
-
+    
+# Combine into master 'SOURCES' variable
+set(SOURCES ${SOURCES} ${PLOTEXTRACT_SOURCES})
 
 
 
@@ -182,19 +184,16 @@ SET (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-rpath,'$ORIGIN/../li
 
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
-ADD_EXECUTABLE(${PLOTEXTRACT_NAME} ${PLOTEXTRACT_SOURCES}
-                                   ${PLOTEXTRACT_HEADERS_MOC}
-                                   ${PLOTEXTRACT_HEADER_FORMS}
-                                   ${PLOTEXTRACT_RESOURCES}
-              )
-TARGET_LINK_LIBRARIES(${PLOTEXTRACT_NAME}
-                            ${QT_LIBRARIES}
-                            ${GEN_CLASSES_LIBS}
-                     )
-                     
+ADD_EXECUTABLE(${PLOTEXTRACT_NAME} ${SOURCES}
+                                ${PLOTEXTRACT_HEADERS_MOC}
+                                ${PLOTEXTRACT_HEADER_FORMS}
+                                ${PLOTEXTRACT_RESOURCES}
+            )
+TARGET_LINK_LIBRARIES(${PLOTEXTRACT_NAME} ${QT_LIBRARIES})
+                    
 
-                     
-                     
+                    
+                    
 
 
 
@@ -206,19 +205,19 @@ TARGET_LINK_LIBRARIES(${PLOTEXTRACT_NAME}
 
 
 INSTALL(TARGETS ${PLOTEXTRACT_NAME} 
-  RUNTIME DESTINATION bin
-  LIBRARY DESTINATION lib
-  ARCHIVE DESTINATION lib
+RUNTIME DESTINATION bin
+LIBRARY DESTINATION lib
+ARCHIVE DESTINATION lib
 )
 
 # On Linux, copy General-Use C++ library to 'lib' directory
-if(UNIX)
-  INSTALL(FILES ${GEN_CLASSES_LIB_DIR}/${GEN_CLASSES_LIBS} DESTINATION lib)
-endif()
+#if(UNIX)
+#  INSTALL(FILES ${GEN_CLASSES_LIB_DIR}/${GEN_CLASSES_LIBS} DESTINATION lib)
+#endif()
 
 # On Windows, copy General-Use C++ library to 'bin' directory
 if(WIN32)
-  INSTALL(FILES ${GEN_CLASSES_LIB_DIR}/${GEN_CLASSES_LIBS} DESTINATION bin)
+  INSTALL(FILES ${QT_LIBRARIES} DESTINATION bin)
 endif()
 
 
