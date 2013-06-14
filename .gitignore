@@ -1,3 +1,7 @@
 # Ignore local build settings
 *.user*
 *.pro.user
+
+# Ignore copy of general-use C++ classes repository
+cpp-classes/
+cpp-classes/*
