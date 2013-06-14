@@ -5,3 +5,6 @@
 # Ignore copy of general-use C++ classes repository
 cpp-classes/
 cpp-classes/*
+
+# Ignore link to general-use C++ classes repository
+gen-classes
