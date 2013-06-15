@@ -6,10 +6,13 @@
 #
 # ==============================================================================
 
-# Require CMake version 2.8+
-cmake_minimum_required(VERSION 2.8)
-
 # Set name ofproject
+project(PlotExtrat)
+
+# Require CMake version 2.8+
+cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
+
+# Set name to be used for executable
 set(PLOTEXTRACT_NAME "plotextract")
 
 # Set default build type
@@ -22,6 +25,8 @@ SET(USE_CXX_11 ON CACHE BOOL "Enable C++-11 Support Globally")
 SET(USE_OPENMP ON CACHE BOOL "Enable OpenMP Support Globally")
 SET(USE_QT ON CACHE BOOL "Enable Qt Functionality Globally" FORCE)
 SET(USE_VTK OFF CACHE BOOL "Enable VTK Library Use Globally")
+
+
 
 
 
@@ -138,11 +143,15 @@ QT4_ADD_RESOURCES(PLOTEXTRACT_RESOURCES ${PLOTEXTRACT_QRC})
 #
 # ==============================================================================
 
-set(GEN_CLASSES_DIR "gen-classes" CACHE STRING 
-    "Name of subdirectory containing CMakeLists.txt for General-Use C++ classes.")
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/${GEN_CLASSES_DIR})
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/${GEN_CLASSES_DIR})
+# User specifies the path to CMakeLists.txt for General-Use C++ classes
+set(GENCLASSES_SOURCE_DIR "GENCLASSES_NOTFOUND" CACHE PATH 
+            "Path General-Use C++ Classes CMakeLists.txt")
 
+# Add the directory as a subdirectory of the build using the 2-argument form
+# of 'add_subdirectory'.  This lets us use code located outside of the local source
+# directory without having to outright copy it or deal with symbolic links.
+add_subdirectory(${GENCLASSES_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/gen-classes)
+include_directories(${CMAKE_CURRENT_BINARY_DIR}/gen-classes)
 
 
 
@@ -179,7 +188,6 @@ set(SOURCES ${SOURCES} ${PLOTEXTRACT_SOURCES})
 # Configure RPATH for library-loading on Linux
 SET(CMAKE_SKIP_BUILD_RPATH  FALSE)
 SET(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE) 
-SET(CMAKE_BUILD_RPATH ${CMAKE_BUILD_RPATH} ${GEN_CLASSES_LIB_DIR})
 
 # Add "../lib" directory relative to executable to library search path.  This
 # makes the executable portable.
@@ -220,7 +228,7 @@ if ( NOT Q_WS_MAC)
     if (DEFINED QT_QMAKE_EXECUTABLE)
         SET (QTLIBLIST QtCore QtGui)
 
-		IF (MSVC)
+		IF(MSVC)
 			FOREACH(qtlib ${QTLIBLIST})
 				INSTALL(FILES ${QT_BINARY_DIR}/${qtlib}4.dll DESTINATION bin)
 			ENDFOREACH()
