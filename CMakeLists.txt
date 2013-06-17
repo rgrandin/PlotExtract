@@ -194,10 +194,25 @@ SET(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
 SET (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-rpath,'$ORIGIN/../lib/'" )
 
 
+# Configure GUI type for each platform
+SET(GUI_TYPE)
+IF(APPLE)
+    SET(GUI_TYPE MACOSX_BUNDLE)
+    SET(SOURCES ${SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/app_figs/plotextract.icns)
+    SET(MACOSX_BUNDLE_ICON_FILE ${CMAKE_CURRENT_SOURCE_DIR}/app_figs/plotextract.icns)
+    SET_SOURCE_FILES_PROPERTIES(${CMAKE_CURRENT_SOURCE_DIR}/app_figs/plotextract.icns
+	PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+ENDIF()
+
+IF(WIN32)
+    SET(GUI_TYPE WIN32)
+ENDIF()
+
+
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
-ADD_EXECUTABLE(${PLOTEXTRACT_NAME} WIN32 MACOSX_BUNDLE
-								${SOURCES}
+ADD_EXECUTABLE(${PLOTEXTRACT_NAME} ${GUI_TYPE}
+				${SOURCES}
                                 ${PLOTEXTRACT_HEADERS_MOC}
                                 ${PLOTEXTRACT_HEADER_FORMS}
                                 ${PLOTEXTRACT_RESOURCES}
@@ -217,11 +232,54 @@ TARGET_LINK_LIBRARIES(${PLOTEXTRACT_NAME} ${QT_LIBRARIES})
 # ==============================================================================
 
 
-INSTALL(TARGETS ${PLOTEXTRACT_NAME} 
-		RUNTIME DESTINATION bin
-		LIBRARY DESTINATION lib
-		ARCHIVE DESTINATION lib
-	)
+# Set options for OS X
+#if(APPLE)
+#    set(APPS bin)  # paths to executables
+#    set(DIRS ${QT_LIBRARY_DIR})  # directories to search for prerequisites
+#    INSTALL(CODE "
+#       include(BundleUtilities)
+#       fixup_bundle(\"${APPS}\"   \"\"   \"${DIRS}\")
+#       " COMPONENT Runtime)
+#
+#    FUNCTION(ADD_CUSTOM_EXECUTABLE TARGET HEADERS SOURCES DEPENDENCIES)
+#        ADD_EXECUTABLE(${TARGET} MACOSX_BUNDLE ${HEADERS} ${SOURCES} ${ARGN})
+#        TARGET_LINK_LIBRARIES(${TARGET} ${DEPENDENCIES})
+#
+#        INSTALL(TARGETS ${TARGET} BUNDLE DESTINATION .)
+#
+#        INSTALL(CODE "
+#            INCLUDE(BundleUtilities)
+#            FIXUP_BUNDLE(${CMAKE_INSTALL_PREFIX}/${TARGET}.app \"\" \"\") 
+#        ")
+#    ENDFUNCTION(ADD_CUSTOM_EXECUTABLE)
+#endif()
+
+SET (PROJECT_RESOURCES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/resources)
+IF (APPLE)
+
+  # -------- Function to build OS X Stand Alone Bundles -----------------
+  function(MakeOSXBundleApp target binary_dir)
+
+    SET (OSX_MAKE_STANDALONE_BUNDLE_CMAKE_SCRIPT "${binary_dir}/${target} f_OSX_MakeStandAloneBundle.cmake")
+    SET (OSX_MAKE_STANDALONE_BUNDLE_BASH_SCRIPT "${binary_dir}/${target}_OSX_MakeStandAloneBundle.sh")
+
+    CONFIGURE_FILE("${PROJECT_RESOURCES_DIR}/OSX_Tools/CompleteBundle.cmake.in"
+      "${OSX_MAKE_STANDALONE_BUNDLE_CMAKE_SCRIPT}" @ONLY IMMEDIATE)
+    CONFIGURE_FILE("${PROJECT_RESOURCES_DIR}/OSX_Tools/CreateBundle.sh.in"
+      "${OSX_MAKE_STANDALONE_BUNDLE_BASH_SCRIPT}" @ONLY IMMEDIATE)
+ 
+   install(SCRIPT "${OSX_MAKE_STANDALONE_BUNDLE_CMAKE_SCRIPT}")
+                    
+  endfunction(MakeOSXBundleApp)
+
+  IF(CMAKE_BUILD_TYPE MATCHES "Debug")
+      MakeOSXBundleApp( "QtTest${EXE_DEBUG_EXTENSION}" ${PROJECT_BINARY_DIR})
+  ELSE (CMAKE_BUILD_TYPE MATCHES "Debug")
+      MakeOSXBundleApp(QtTest ${PROJECT_BINARY_DIR})
+  ENDIF(CMAKE_BUILD_TYPE MATCHES "Debug")
+
+ENDIF (APPLE)
+
 
 # Copy needed Qt DLL files into INSTALL destination
 if ( NOT Q_WS_MAC)
@@ -236,6 +294,15 @@ if ( NOT Q_WS_MAC)
 
     endif(DEFINED QT_QMAKE_EXECUTABLE)
 endif()
+
+
+INSTALL(TARGETS ${PLOTEXTRACT_NAME} 
+		RUNTIME DESTINATION bin
+		LIBRARY DESTINATION lib
+		ARCHIVE DESTINATION lib
+		BUNDLE DESTINATION bundle
+	)
+
 
 
 
