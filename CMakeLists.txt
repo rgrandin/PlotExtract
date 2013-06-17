@@ -152,7 +152,7 @@ set(GENCLASSES_SOURCE_DIR "GENCLASSES_NOTFOUND" CACHE PATH
 # directory without having to outright copy it or deal with symbolic links.
 add_subdirectory(${GENCLASSES_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/gen-classes)
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/gen-classes)
-
+include_directories(${GENCLASSES_SOURCE_DIR})
 
 
 
